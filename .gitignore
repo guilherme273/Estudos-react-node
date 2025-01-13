@@ -2,7 +2,7 @@
 /Back/node_modules/
 /Front/node_modules/
 
-/Back/node_modules/env
+/Back/node_modules/env.js
 
 
 *.log
