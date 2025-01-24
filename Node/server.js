@@ -1,5 +1,6 @@
 import express from "express";
 import Usuarios from "./controllers/firstConectionApi.js";
+import Contact_Portifolio from "./controllers/Contact.js";
 import Users from "./controllers/Usuarios.js";
 import Likes from "./controllers/Likes.js";
 import cors from "cors";
@@ -20,6 +21,7 @@ app.use(express.urlencoded({ extended: true, limit: "50mb" }));
 app.use("/", Usuarios);
 app.use("/", Users);
 app.use("/", Likes);
+app.use("/", Contact_Portifolio);
 
 app.listen(80, (e) => {
   try {

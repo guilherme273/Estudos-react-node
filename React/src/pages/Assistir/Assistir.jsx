@@ -7,7 +7,7 @@ import { useMovies } from "../../contexts/allMovies";
 
 function Assistir() {
   const location = useLocation();
-  const { listMovies, movieId, valueInputSearch, cat } = location.state || {};
+  const { movieId, valueInputSearch, cat } = location.state || {};
   const category = cat;
   const { allMovies } = useMovies();
 
@@ -15,7 +15,7 @@ function Assistir() {
     <div>
       <Header allMovies={allMovies} valueInputSearch={valueInputSearch} />
       <ContainerAssistir movieId={movieId} />
-      <DivCards title={category} movies={listMovies} allMovies={allMovies} />;
+      <DivCards title={category} movies={allMovies} allMovies={allMovies} />;
       <Footer />
     </div>
   );

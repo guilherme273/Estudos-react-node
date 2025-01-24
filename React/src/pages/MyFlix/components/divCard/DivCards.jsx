@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import { useLikes } from "../../../../contexts/likes";
 import { useAuthenticator } from "../../../../contexts/login";
 
-function DivCards({ movies, title = "", allMovies }) {
+function DivCards({ movies, title = "" }) {
   const cards = useRef(null);
   const { makeLike, likes, unMakeLike } = useLikes();
   const { getUser } = useAuthenticator();

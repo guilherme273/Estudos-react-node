@@ -98,11 +98,17 @@ const router = createBrowserRouter([
     path: "*",
     element: <NotFound />,
   },
+
   {
     path: "/assistir",
-    element: <Assistir />,
+    element: <PrivateRoute />,
+    children: [
+      {
+        path: "",
+        element: <Assistir />,
+      },
+    ],
   },
-
   {
     path: "/Pesquisar",
     element: <PrivateRoute />,
