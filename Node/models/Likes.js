@@ -12,12 +12,10 @@ const Likes = conecction.define(
     id_user: {
       type: DataTypes.INTEGER,
       allowNull: false,
-      unique: true,
     },
     id_movie: {
       type: DataTypes.TEXT,
       allowNull: false,
-      unique: true,
     },
   },
   {

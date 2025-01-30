@@ -20,12 +20,10 @@ const Contact_Portifolio = conecction.define(
     motivo: {
       type: DataTypes.STRING(100),
       allowNull: false,
-      unique: false,
     },
     descricao: {
       type: DataTypes.STRING(100),
       allowNull: false,
-      unique: false,
     },
   },
   {

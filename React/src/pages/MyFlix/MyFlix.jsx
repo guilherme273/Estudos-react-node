@@ -4,7 +4,6 @@ import Header from "./components/header/Header";
 import Container from "./components/container/Container";
 import "./MyFlixStyle.css";
 import { useMovies } from "../../contexts/allMovies";
-import { useEffect, useState } from "react";
 
 function MyFlix() {
   const { allMovies, setAllMovies } = useMovies();

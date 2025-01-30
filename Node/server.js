@@ -10,7 +10,7 @@ import conection from "./database/database.js";
 const app = express();
 app.use(
   cors({
-    origin: "http://localhost:5173",
+    origin: "*",
   })
 );
 
@@ -23,15 +23,19 @@ app.use("/", Users);
 app.use("/", Likes);
 app.use("/", Contact_Portifolio);
 
-app.listen(80, (e) => {
+app.listen(80, async () => {
   try {
-    if (!e) {
-      console.log("Rodou na 80");
-    }
-    if (conection.authenticate()) {
-      console.log("CONECTOU NO DB.");
-    }
-  } catch (e) {
-    console.log(e);
+    // Tentando autenticar a conexão com o bancoss
+    await conection.authenticate();
+    console.log("CONECTOU NO DB.");
+
+    // Sincroniza as tabelas com o banco
+    await conection.sync({ force: false }); // Use 'true' se você quiser recriar as tabelas
+    console.log("Tabelas sincronizadas com sucesso!");
+
+    // Se não houver erro, o servidor está rodando na porta 80
+    console.log("Rodou na 80");
+  } catch (err) {
+    console.error("Erro ao conectar ou sincronizar:", err);
   }
 });

@@ -21,7 +21,6 @@ const Usuarios = conecction.define(
     password: {
       type: DataTypes.STRING(100),
       allowNull: false,
-      unique: false,
     },
   },
   {
