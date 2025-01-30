@@ -5,10 +5,13 @@ import { check, validationResult } from "express-validator";
 import { rateLimit } from "express-rate-limit";
 const router = Express.Router();
 const contactRateLimiter = rateLimit({
-  windowMs: 60 * 60 * 1000,
+  windowMs: 60 * 60 * 2000,
   max: 3,
-  message:
-    "Foi detectado atitude suspeita e as suas requisições foram suspensas. Tente novamente mais tarde!",
+  message: JSON.stringify({
+    error: true,
+    message:
+      "Foi detectado atitude suspeita e as suas requisições foram suspensas. Tente novamente mais tarde!",
+  }),
 });
 
 router.post(
@@ -39,8 +42,12 @@ router.post(
   async (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-      return res.status(400).json({ errors: errors.array() });
+      // Resposta padronizada com a chave "message"
+      return res
+        .status(400)
+        .json({ error: true, message: errors.array()[0].msg });
     }
+
     const {
       nome,
       contato,
@@ -49,12 +56,11 @@ router.post(
       "g-recaptcha-response": token,
     } = req.body;
     const secretKey = "6LeKpMEqAAAAALrvi0Zv_eMXd6dl_Nn-NoEWfW9s";
+
     try {
       const response = await fetch(
         `https://www.google.com/recaptcha/api/siteverify?secret=${secretKey}&response=${token}`,
-        {
-          method: "POST",
-        }
+        { method: "POST" }
       );
 
       const data = await response.json();
@@ -62,11 +68,15 @@ router.post(
       if (!data.success) {
         return res
           .status(400)
-          .json({ msg: "Falha na validação do reCAPTCHA." });
+          .json({ error: true, message: "Falha na validação do reCAPTCHA." });
       }
     } catch (error) {
       console.log(error);
+      return res
+        .status(500)
+        .json({ error: true, message: "Erro ao validar o reCAPTCHA." });
     }
+
     try {
       const result = await Contact_Portifolio.create({
         nome,
@@ -76,12 +86,19 @@ router.post(
       });
 
       if (result) {
-        res.status(200).json({ nome });
+        return res
+          .status(200)
+          .json({ error: false, message: "Contato registrado com sucesso!" });
       } else {
-        res.status(400).json({ msg: "Não foi Possivel Concluir a Ação" });
+        return res
+          .status(400)
+          .json({ error: true, message: "Não foi possível concluir a ação." });
       }
     } catch (e) {
       console.log(e);
+      return res
+        .status(500)
+        .json({ error: true, message: "Erro ao registrar o contato." });
     }
   }
 );
