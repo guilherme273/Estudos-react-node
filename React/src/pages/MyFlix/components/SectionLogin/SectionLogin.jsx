@@ -15,7 +15,7 @@ function SectionLogin() {
   const makeRequest = async (data) => {
     await logar(data);
   };
-  console.log(logado);
+
   if (logado) {
     return <Navigate to="/myflix" />;
   } else {
