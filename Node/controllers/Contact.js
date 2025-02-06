@@ -55,7 +55,7 @@ router.post(
       descricao,
       "g-recaptcha-response": token,
     } = req.body;
-    const secretKey = "6LeKpMEqAAAAALrvi0Zv_eMXd6dl_Nn-NoEWfW9s";
+    const secretKey = "6LdRPs0qAAAAAGj-6dkmykz3D8QSex99gcMYRy9J";
 
     try {
       const response = await fetch(

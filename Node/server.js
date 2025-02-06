@@ -23,7 +23,7 @@ app.use("/", Users);
 app.use("/", Likes);
 app.use("/", Contact_Portifolio);
 
-app.listen(80, async () => {
+app.listen(3000, async () => {
   try {
     // Tentando autenticar a conexão com o bancoss
     await conection.authenticate();
