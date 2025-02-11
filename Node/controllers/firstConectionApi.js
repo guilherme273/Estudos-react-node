@@ -17,5 +17,38 @@ router.get("/get-all-movies", async (req, res) => {
  }
 });
 
+router.post("/add-movie", async (req, res) => {
+  const { 
+    id,
+    title,
+    url,
+    cover,
+    category } = req.body;
+
+
+
+  try {
+
+    const existe = await Movies.findOne({where:{id:id}});
+
+    if(existe)
+    {
+      return res.status(401).json({success:false, msg: "O video já existente no projeto!" });
+    }
+
+    const x = await Movies.create({
+      id,
+      title,
+      url,
+      cover,
+      category
+    });
+
+    return res.status(201).json({ success:true, msg: "Video adicionado com sucesso!" });
+  } catch (error) {
+    console.log(error);
+  }
+});
+
 export default router;
 
